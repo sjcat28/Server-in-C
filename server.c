@@ -8,6 +8,7 @@
 #include <unistd.h>
 // Include necessary header files
 #define buffer_size 1000
+#define BASE_DIRECTORY "txt files";
 
   
 /**
@@ -22,8 +23,12 @@
   * 
   */
  void handle_get(char *file_name, int client_fd, char buffer[]){
+    //making the file path into the txt files folder
+    char file_path[50]; // Adjust size as needed
+	snprintf(file_path, sizeof(file_path), "txt file/%s", file_name);
+
 	//opening file and setting it to READ mode 
-	FILE *file = fopen(file_name, "r");
+	FILE *file = fopen(file_path, "r");
 	if(file != NULL){
 		send(client_fd, "SERVER 200 OK\n\n", 15, 0);
 
@@ -52,11 +57,14 @@
   * 
   * 
   */
+
  void handle_put(char *file_name, int client_fd, char buffer[]){
-
-
+    //making the file path into the txt files folder
+    char file_path[50]; // Adjust size as needed
+	snprintf(file_path, sizeof(file_path), "txt files/%s", file_name);
+	
 	//opening file and setting it to WRITE mode
-	FILE *file = fopen(file_name, "w");
+	FILE *file = fopen(file_path, "w");
 
 	if(file != NULL){
 		//varaible to keep count of empty lines();
